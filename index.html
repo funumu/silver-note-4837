@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#234C6A">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="財務諸表論">
+  <title>財務諸表論 肢別チェック</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section id="lockScreen" class="lock-screen" aria-labelledby="lockTitle">
+    <div class="lock-card">
+      <p class="eyebrow">PRIVATE STUDY</p>
+      <h1 id="lockTitle">学習データを開く</h1>
+      <p id="lockNote" class="lock-note">問題データを読み込んでいます。</p>
+      <form id="unlockForm" class="unlock-form hidden">
+        <label>パスワード
+          <input id="passwordInput" type="password" autocomplete="current-password" inputmode="text" placeholder="パスワードを入力" required>
+        </label>
+        <button id="unlockBtn" class="primary full" type="submit">開く</button>
+      </form>
+      <p id="unlockMessage" class="unlock-message" aria-live="polite"></p>
+      <p class="lock-mini">暗号化版では、正しいパスワードを入力した場合のみ問題データを端末上で復号します。</p>
+    </div>
+  </section>
+
+  <div class="app-shell hidden-until-unlocked">
+    <header class="app-header">
+      <button id="backBtn" class="icon-btn hidden" type="button" aria-label="戻る">←</button>
+      <div class="brand">
+        <p class="eyebrow">公認会計士試験 短答対策</p>
+        <h1>財務諸表論 肢別チェック</h1>
+      </div>
+      <button id="homeBtn" class="icon-btn" type="button" aria-label="ホーム">⌂</button>
+    </header>
+
+    <main>
+      <section id="homeScreen" class="screen active" aria-labelledby="homeTitle">
+        <div class="hero-card">
+          <p class="eyebrow">FINANCIAL STATEMENTS</p>
+          <h2 id="homeTitle">今日の財務諸表論トレーニング</h2>
+          <p class="hero-text">全1,260問を、章・ランク・苦手状況に合わせて隙間時間に1肢ずつ確認できます。</p>
+          <div class="hero-stats">
+            <div><span id="totalCount">-</span><small>総問題数</small></div>
+            <div><span id="answeredCount">-</span><small>正解済み</small></div>
+            <div><span id="correctRate">-</span><small>学習進捗</small></div>
+            <div><span id="weakCount">-</span><small>苦手問題</small></div>
+          </div>
+          <div class="overall-progress" aria-label="全体の学習進捗">
+            <div class="overall-progress-head">
+              <strong>全体の学習進捗</strong>
+              <span id="overallProgressText">0 / 0問</span>
+            </div>
+            <div class="overall-progress-bar"><span id="overallProgressBar"></span></div>
+            <p class="progress-note">全1,260問のうち、直近で正解できている問題数で進捗率を計算します。</p>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <button id="quickStartBtn" class="primary big" type="button">すぐに10問</button>
+          <button id="continueBtn" class="secondary big" type="button">前回の続き</button>
+        </div>
+
+        <div class="menu-grid">
+          <button class="menu-card" data-menu="setup" type="button"><span>📚</span><strong>学習モードを選ぶ</strong><small>章・ランク・出題数を指定</small></button>
+          <button class="menu-card" data-preset="wrong" type="button"><span>🔁</span><strong>間違えた問題を復習</strong><small>前回不正解だけを再演習</small></button>
+          <button class="menu-card" data-menu="weak" type="button"><span>🔥</span><strong>苦手問題リスト</strong><small>直近で間違えた問題を確認</small></button>
+          <button class="menu-card" data-preset="bookmarked" type="button"><span>★</span><strong>ブックマーク復習</strong><small>気になる問題だけ確認</small></button>
+          <button class="menu-card" data-menu="progress" type="button"><span>📊</span><strong>章別の進捗を見る</strong><small>回答数と正答率を確認</small></button>
+        </div>
+      </section>
+
+      <section id="setupScreen" class="screen" aria-labelledby="setupTitle">
+        <div class="section-title"><p class="eyebrow">MODE SELECT</p><h2 id="setupTitle">学習モード選択</h2></div>
+        <form id="setupForm" class="panel form-panel">
+          <label>出題範囲<select id="chapterFilter"><option value="all">すべての章</option></select></label>
+          <label>ランク<select id="rankFilter"><option value="all">すべて</option><option value="A">Aランク</option><option value="B">Bランク</option><option value="C">Cランク</option></select></label>
+          <label>出題モード<select id="modeFilter"><option value="all">全問題</option><option value="unanswered">未回答のみ</option><option value="wrong">前回不正解のみ</option><option value="weak">苦手問題のみ（直近不正解）</option><option value="bookmarked">ブックマークのみ</option></select></label>
+          <label>出題数<select id="limitFilter"><option value="10">10問</option><option value="20">20問</option><option value="30">30問</option><option value="50">50問</option><option value="all">該当問題すべて</option></select></label>
+          <label class="check-row"><input id="shuffleToggle" type="checkbox" checked> シャッフルして出題する</label>
+          <div id="setupCount" class="count-preview">該当問題数：-</div>
+          <button class="primary full" type="submit">この条件で演習開始</button>
+        </form>
+      </section>
+
+      <section id="studyScreen" class="screen" aria-labelledby="questionNo">
+        <div class="study-top"><div><p id="sessionLabel" class="eyebrow">SESSION</p><h2 id="questionNo">読み込み中...</h2></div><div class="pill" id="progressText">0 / 0</div></div>
+        <div class="progress-bar" aria-hidden="true"><span id="progressBar"></span></div>
+        <article class="panel question-card">
+          <div id="metaText" class="meta"></div><p id="questionText" class="question-text"></p><div id="imageBox" class="image-box"></div><div id="choices" class="choices"></div><div id="resultBox" class="result hidden"></div>
+        </article>
+        <div class="bottom-actions"><button id="bookmarkBtn" class="secondary" type="button">☆ ブックマーク</button><button id="nextBtn" class="primary" type="button">次の問題へ</button></div>
+      </section>
+
+      <section id="resultScreen" class="screen" aria-labelledby="resultTitle">
+        <div class="result-hero"><p class="eyebrow">SESSION RESULT</p><h2 id="resultTitle">演習結果</h2><div class="hero-stats"><div><span id="sessionAnswered">0</span><small>回答数</small></div><div><span id="sessionCorrect">0</span><small>正解数</small></div><div><span id="sessionRate">-</span><small>正答率</small></div></div></div>
+        <div class="result-actions"><button id="retryWrongBtn" class="primary full" type="button">今回間違えた問題を復習</button><button id="sameConditionBtn" class="secondary full" type="button">同じ条件でもう一度</button><button id="toHomeFromResultBtn" class="ghost full" type="button">ホームへ戻る</button></div>
+      </section>
+
+      <section id="weakScreen" class="screen" aria-labelledby="weakTitle">
+        <div class="section-title"><p class="eyebrow">WEAK POINTS</p><h2 id="weakTitle">苦手問題リスト</h2><p class="subtext">直近で間違えた問題を自動で記録します。正解するとリストから外れ、再び間違えると再追加されます。</p></div>
+        <div class="weak-summary panel"><div><span id="weakTotal">0</span><small>現在の苦手</small></div><div><span id="weakAnswered">0</span><small>回答済み</small></div><div><span id="weakAvgWrong">-</span><small>平均ミス回数</small></div></div>
+        <button id="startWeakBtn" class="primary full" type="button">苦手問題だけを演習する</button><div id="weakList" class="weak-list"></div>
+      </section>
+
+      <section id="progressScreen" class="screen" aria-labelledby="progressTitle">
+        <div class="section-title"><p class="eyebrow">PROGRESS</p><h2 id="progressTitle">章別進捗</h2><p class="subtext">この端末に保存されている学習記録をもとに表示しています。</p></div>
+        <div id="chapterProgressList" class="progress-list"></div><button id="resetProgressBtn" class="danger full" type="button">学習記録をリセット</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="vault.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
